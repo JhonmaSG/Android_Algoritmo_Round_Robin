@@ -2,9 +2,80 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/main_creditos"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity_creditos">
 
+    <TextView
+        android:id="@+id/agradecimientos"
+        android:layout_width="297dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="173dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="180dp"
+        android:text="Gracias por ver"
+        android:textAlignment="center"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/integrante_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Juan Pablo Daza Bejarano"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/agradecimientos"
+        app:layout_constraintStart_toStartOf="@+id/agradecimientos"
+        app:layout_constraintTop_toBottomOf="@+id/agradecimientos" />
+
+    <TextView
+        android:id="@+id/integrante_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Jhon Mario Serrano Gordillo"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/integrante_1"
+        app:layout_constraintStart_toStartOf="@+id/integrante_1"
+        app:layout_constraintTop_toBottomOf="@+id/integrante_1" />
+
+    <TextView
+        android:id="@+id/integrante_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Cristian Triana Larrota"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/integrante_2"
+        app:layout_constraintStart_toStartOf="@+id/integrante_2"
+        app:layout_constraintTop_toBottomOf="@+id/integrante_2" />
+
+    <TextView
+        android:id="@+id/integrante_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Andres Felipe Avila Rosas"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/integrante_3"
+        app:layout_constraintStart_toStartOf="@+id/integrante_3"
+        app:layout_constraintTop_toBottomOf="@+id/integrante_3" />
+
+    <TextView
+        android:id="@+id/final_agradecimientos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="148dp"
+        android:text="Espero que te haya servido :3"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/integrante_4"
+        app:layout_constraintHorizontal_bias="0.469"
+        app:layout_constraintStart_toStartOf="@+id/integrante_4"
+        app:layout_constraintTop_toBottomOf="@+id/integrante_4" />
 </androidx.constraintlayout.widget.ConstraintLayout>
