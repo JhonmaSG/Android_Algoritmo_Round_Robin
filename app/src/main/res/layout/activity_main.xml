@@ -1,19 +1,46 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:padding="16dp">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <!-- Input para el número de procesos -->
+    <EditText
+        android:id="@+id/input_process_count"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:hint="Número de procesos"
+        android:inputType="number" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Input para el burst time (separado por comas) -->
+    <EditText
+        android:id="@+id/input_burst_times"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Tiempos de burst (separados por comas)" />
+
+    <!-- Input para el quantum -->
+    <EditText
+        android:id="@+id/input_quantum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Quantum"
+        android:inputType="number" />
+
+    <!-- Botón para ejecutar la simulación -->
+    <Button
+        android:id="@+id/btn_simulate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ejecutar Round Robin" />
+
+    <!-- Resultado de la simulación -->
+    <TextView
+        android:id="@+id/result_output"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Resultados"
+        android:paddingTop="16dp" />
+
+</LinearLayout>
