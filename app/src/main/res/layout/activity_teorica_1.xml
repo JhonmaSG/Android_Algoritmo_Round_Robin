@@ -7,4 +7,189 @@
     android:layout_height="match_parent"
     tools:context=".activity_teorica_1">
 
+    <TextView
+        android:id="@+id/titulo_tutorial"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="30dp"
+        android:text="Pasos para entender el algoritmo"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.679"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/titulo_formulas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Formulas"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/titulo_tutorial"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/titulo_tutorial"
+        app:layout_constraintTop_toBottomOf="@+id/titulo_tutorial" />
+
+    <TextView
+        android:id="@+id/formula_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Si TR menor o igual Q -> Consume el tiempo del proceso"
+        app:layout_constraintEnd_toEndOf="@+id/titulo_formulas"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/titulo_formulas"
+        app:layout_constraintTop_toBottomOf="@+id/titulo_formulas" />
+
+    <TextView
+        android:id="@+id/formula_2"
+        android:layout_width="332dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="8dp"
+        android:text="Si TR mayor Q -> Consume el valor del Q y pasa a cola"
+        android:textAlignment="viewStart"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/formula_1"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/formula_1"
+        app:layout_constraintTop_toBottomOf="@+id/formula_1" />
+
+    <TextView
+        android:id="@+id/formula_2_final"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Resta TR - Q"
+        app:layout_constraintEnd_toEndOf="@+id/formula_2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/formula_2"
+        app:layout_constraintTop_toBottomOf="@+id/formula_2" />
+
+    <TextView
+        android:id="@+id/titulo_paso_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Paso 1"
+        app:layout_constraintEnd_toEndOf="@+id/formula_2_final"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/formula_2_final"
+        app:layout_constraintTop_toBottomOf="@+id/formula_2_final" />
+
+    <TextView
+        android:id="@+id/paso_1.1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="1.1Se generan n cantidad de procesos"
+        app:layout_constraintEnd_toEndOf="@+id/titulo_paso_1"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/titulo_paso_1"
+        app:layout_constraintTop_toBottomOf="@+id/titulo_paso_1" />
+
+    <TextView
+        android:id="@+id/paso_1.2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="1.2 En donde cada uno tiene un tiempo de llegada"
+        app:layout_constraintEnd_toEndOf="@+id/paso_1.1"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/paso_1.1"
+        app:layout_constraintTop_toBottomOf="@+id/paso_1.1" />
+
+    <TextView
+        android:id="@+id/paso_1.3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="1.3 Luego se da un tiempo de rafaga, que seria lo que se tarda el proceso en realizarse"
+        app:layout_constraintEnd_toEndOf="@+id/paso_1.2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/paso_1.2"
+        app:layout_constraintTop_toBottomOf="@+id/paso_1.2" />
+
+    <TextView
+        android:id="@+id/titulo_paso_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Paso 2"
+        app:layout_constraintEnd_toEndOf="@+id/paso_1.3"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/paso_1.3"
+        app:layout_constraintTop_toBottomOf="@+id/paso_1.3" />
+
+    <TextView
+        android:id="@+id/paso_2.1"
+        android:layout_width="306dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="2.1 Ahora el proceso que llega se empieza a ejecutar"
+        app:layout_constraintEnd_toEndOf="@+id/titulo_paso_2"
+        app:layout_constraintHorizontal_bias="0.003"
+        app:layout_constraintStart_toStartOf="@+id/titulo_paso_2"
+        app:layout_constraintTop_toBottomOf="@+id/titulo_paso_2" />
+
+    <TextView
+        android:id="@+id/paso_2.2"
+        android:layout_width="307dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="2.2 Aplicando la formula de arriba, decidira si el programa acaba su ejecucion o no"
+        app:layout_constraintEnd_toEndOf="@+id/paso_2.1"
+        app:layout_constraintHorizontal_bias="0.015"
+        app:layout_constraintStart_toStartOf="@+id/paso_2.1"
+        app:layout_constraintTop_toBottomOf="@+id/paso_2.1" />
+
+    <TextView
+        android:id="@+id/paso_2.3"
+        android:layout_width="309dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="2.3 En caso tal de acabar queda en ese punto del proceso sino pasa a la cola para luego seguir ejecutando"
+        app:layout_constraintEnd_toEndOf="@+id/paso_2.2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/paso_2.2"
+        app:layout_constraintTop_toBottomOf="@+id/paso_2.2" />
+
+    <TextView
+        android:id="@+id/titulo_paso_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Paso 3"
+        app:layout_constraintEnd_toEndOf="@+id/paso_2.3"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/paso_2.3"
+        app:layout_constraintTop_toBottomOf="@+id/paso_2.3" />
+
+    <TextView
+        android:id="@+id/paso_3.1"
+        android:layout_width="310dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="3.1 Al finalizar cada proceso se ira marcando la cantidad de tiempo que demoro en finalizar la tarea"
+        app:layout_constraintEnd_toEndOf="@+id/titulo_paso_3"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/titulo_paso_3"
+        app:layout_constraintTop_toBottomOf="@+id/titulo_paso_3" />
+
+    <Button
+        android:id="@+id/pasar_proceso"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="-25dp"
+        android:text="Ver algoritmo"
+        app:backgroundTint="#0E44E2"
+        app:layout_constraintEnd_toEndOf="@+id/paso_3.1"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/paso_3.1"
+        app:layout_constraintTop_toBottomOf="@+id/paso_3.1" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
