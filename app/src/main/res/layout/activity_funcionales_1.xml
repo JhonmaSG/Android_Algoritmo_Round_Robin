@@ -7,4 +7,91 @@
     android:layout_height="match_parent"
     tools:context=".activity_funcionales_1">
 
+    <!-- Campo para ingresar el valor -->
+
+    <!-- Botón para agregar datos a la sublista actual -->
+
+    <!-- Botón para agregar una nueva sublista como nuevo proceso -->
+
+    <EditText
+        android:id="@+id/numero_proceso"
+        android:layout_width="264dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="24dp"
+        android:hint="Numero del proceso"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="@+id/titulo_parte_funcional"
+        app:layout_constraintStart_toStartOf="@+id/titulo_parte_funcional"
+        app:layout_constraintTop_toBottomOf="@+id/titulo_parte_funcional" />
+
+    <Button
+        android:id="@+id/anadir_proceso"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Agregar Datos"
+        app:backgroundTint="#0E44E2"
+        app:layout_constraintEnd_toEndOf="@+id/tiempo_rafaga"
+        app:layout_constraintStart_toStartOf="@+id/tiempo_rafaga"
+        app:layout_constraintTop_toBottomOf="@+id/tiempo_rafaga" />
+
+    <TextView
+        android:id="@+id/titulo_parte_funcional"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Parte Funcional"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/tiempo_llegada"
+        android:layout_width="268dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="Tiempo de llegada"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="@+id/numero_proceso"
+        app:layout_constraintStart_toStartOf="@+id/numero_proceso"
+        app:layout_constraintTop_toBottomOf="@+id/numero_proceso" />
+
+    <EditText
+        android:id="@+id/tiempo_rafaga"
+        android:layout_width="268dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="Tiempo de Rafaga/CPU"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="@+id/tiempo_llegada"
+        app:layout_constraintStart_toStartOf="@+id/tiempo_llegada"
+        app:layout_constraintTop_toBottomOf="@+id/tiempo_llegada" />
+
+    <Button
+        android:id="@+id/ver_procesos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Ver simulación"
+        app:backgroundTint="#0E44E2"
+        app:layout_constraintEnd_toEndOf="@+id/anadir_proceso"
+        app:layout_constraintStart_toStartOf="@+id/anadir_proceso"
+        app:layout_constraintTop_toBottomOf="@+id/anadir_proceso" />
+
+    <TextView
+        android:id="@+id/ver_datos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:textAlignment="viewStart"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ver_procesos" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

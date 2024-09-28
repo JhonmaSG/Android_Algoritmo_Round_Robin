@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Contenedor para la línea de tiempo (marcar cada proceso) -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/line_chart"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:background="#E0E0E0"
+            android:orientation="horizontal"
+            android:padding="4dp">
+
+            <!-- Esta sección será dinámica para agregar las líneas de procesos (Views) -->
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <!-- TextView para mostrar la lista de resultados (número de proceso, tiempo de llegada y tiempo total) -->
+    <TextView
+        android:id="@+id/resultados_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Resultados del Algoritmo Round Robin"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+</LinearLayout>
