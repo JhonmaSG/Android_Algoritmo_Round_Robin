@@ -8,15 +8,15 @@
 
     <!-- Contenedor para la línea de tiempo (marcar cada proceso) -->
     <HorizontalScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="378dp"
+        android:layout_height="219dp"
         android:padding="8dp"
         android:scrollbars="none">
 
         <LinearLayout
             android:id="@+id/line_chart"
             android:layout_width="wrap_content"
-            android:layout_height="100dp"
+            android:layout_height="150dp"
             android:background="#E0E0E0"
             android:orientation="horizontal"
             android:padding="4dp">

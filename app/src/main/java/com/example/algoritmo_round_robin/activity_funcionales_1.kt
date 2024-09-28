@@ -14,11 +14,10 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import java.io.Serializable
 
 class activity_funcionales_1 : AppCompatActivity() {
-    private lateinit var lista_principal: MutableList<MutableList<String>>
-    private lateinit var lista_actual: MutableList<String>
-    private lateinit var textViewDatos: TextView
+    private lateinit var lista_actual: MutableList<Datos>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +32,6 @@ class activity_funcionales_1 : AppCompatActivity() {
         // - tiempo promedio de espera
         // - tiempo promedio de finalización
         // Inicializar la lista principal y la sublista actual.
-        lista_principal = mutableListOf()
         lista_actual = mutableListOf()
 
         // Referenciar los elementos de la interfaz (suponiendo que tienes dos EditText y un Button)
@@ -51,53 +49,51 @@ class activity_funcionales_1 : AppCompatActivity() {
             var tiempo_rafagas = tiempo_rafaga.text.toString()
             var tiempo_llegadas = tiempo_llegada.text.toString()
 
-            if (numero_procesos.isNotEmpty() && tiempo_rafagas.isNotEmpty() && tiempo_llegadas.isNotEmpty()) {
-                if (!esNumeroProcesoDuplicado(numero_procesos)) {
-                // Agregar la entrada de datos a la sublista actual
-                lista_actual.add(numero_procesos)
-                lista_actual.add(tiempo_rafagas)
-                lista_actual.add(tiempo_llegadas)
+            val duplicados = esElementoDuplicado(numero_procesos,tiempo_llegadas)
+            val proceso_duplicado = duplicados.first
+            val tiempo_llegada_duplicado = duplicados.second
 
-                // Limpiar los EditTexts para agregar más datos
-                numero_proceso.text.clear()
-                tiempo_rafaga.text.clear()
-                tiempo_llegada.text.clear()
+            if (numero_procesos.isNotEmpty() && tiempo_rafagas.isNotEmpty() && tiempo_llegadas.isNotEmpty()) {
+                if (!proceso_duplicado) {
+                    if(!tiempo_llegada_duplicado){
+                        // Agregar la entrada de datos a la sublista actual
+                        lista_actual.add(Datos(numero_procesos.toInt(), tiempo_llegadas.toInt(), tiempo_rafagas.toInt()))
+
+                        // Limpiar los EditTexts para agregar más datos
+                        numero_proceso.text.clear()
+                        tiempo_rafaga.text.clear()
+                        tiempo_llegada.text.clear()
+
+                        // Mostrar todos los datos en el TextView
+                        mostrarDatosEnTextView(ver_datos)
+
+                        // Mostrar la lista actual en el log o la consola para verificar (opcional)
+                        lista_actual.forEachIndexed { index, list ->
+                            Log.d("MasterList", "Lista $index: $list")
+                        }
+                    }else{
+                        // Mostrar mensaje de error si el tiempo de llegada ya existe
+                        Toast.makeText(this, "El tiempo de llegada $tiempo_llegadas ya existe . Por favor, ingrese otro tiempo.", Toast.LENGTH_SHORT).show()
+                    }
+
+
             }else {
                     // Mostrar mensaje de error si el número de proceso ya existe
-                    Toast.makeText(this, "El número de proceso $numero_procesos ya existe. Por favor, ingrese otro número.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "El número de proceso $numero_procesos ya existe . Por favor, ingrese otro número.", Toast.LENGTH_SHORT).show()
                 }
+            }else{
+                Toast.makeText(this, "Por favor, complete todos los campos.", Toast.LENGTH_SHORT).show()
             }
-            if (lista_actual.isNotEmpty()) {
-                // Agregar la sublista actual a la lista principal
-                lista_principal.add(lista_actual)
 
-
-                // Mostrar la lista actual en el log o la consola para verificar (opcional)
-                lista_principal.forEachIndexed { index, list ->
-                    Log.d("MasterList", "Lista $index: $list")
-                }
-
-                // Mostrar todos los datos en el TextView
-                mostrarDatosEnTextView(ver_datos)
-
-                // Crear una nueva sublista vacía para seguir agregando datos
-                lista_actual = mutableListOf()
-
-
-            }
         }
 
 
 
         ver_procesos.setOnClickListener {
-            // Convertir lista_principal en ArrayList<ArrayList<String>> para que sea serializable
-            val listaSerializable = lista_principal.map { ArrayList(it) } as ArrayList<ArrayList<String>>
 
             // Crear un Intent para ir a activity_funcionales_2
-            val intent = Intent(this, activity_funcionales_2::class.java).apply{
-                intent.putExtra("lista_principal", listaSerializable) // Pasar lista_principal como un extra
-            }
-
+            val intent = Intent(this, activity_funcionales_2::class.java)
+            intent.putExtra("listaPrincipal", lista_actual as Serializable) // Pasar lista_principal como un extra
 
             startActivity(intent) // Iniciar la nueva actividad
 
@@ -112,30 +108,30 @@ class activity_funcionales_1 : AppCompatActivity() {
 
     }
     // Función para mostrar los datos en el TextView
-    private fun mostrarDatosEnTextView(ver_datos: TextView) {
+    private fun mostrarDatosEnTextView(verDatos: TextView) {
         val stringBuilder = StringBuilder()
 
-        // Recorrer la lista principal y concatenar los datos
-        for (subLista in lista_principal) {
-            // Asumiendo que cada sublista tiene 3 elementos
-            stringBuilder.append("Proceso: ${subLista[0]}\n")
-            stringBuilder.append("Tiempo de Llegada: ${subLista[1]}\n")
-            stringBuilder.append("Tiempo de Ráfaga: ${subLista[2]}\n")
-            stringBuilder.append("\n") // Agregar espacio entre procesos
+        for (element in lista_actual) {
+            stringBuilder.append("Proceso: ${element.id}\n")
+            stringBuilder.append("Tiempo de Llegada: ${element.tiempoLlegada}\n")
+            stringBuilder.append("Tiempo de Ráfaga: ${element.tiempoRafaga}\n")
+            stringBuilder.append("\n") // Agregar espacio entre elementos
         }
 
-        // Asigna el texto al TextView
-        ver_datos.text = stringBuilder.toString()
+        verDatos.text = stringBuilder.toString()
     }
 
-    // Función para verificar si el número de proceso ya existe en lista_principal
-    private fun esNumeroProcesoDuplicado(numero_proceso: String): Boolean {
-        // Recorrer la lista principal y verificar si el número de proceso ya existe
-        for (subLista in lista_principal) {
-            if (subLista.isNotEmpty() && subLista[0] == numero_proceso) {
-                return true // Número de proceso duplicado
+    private fun esElementoDuplicado(idProceso: String, tiempoLlegada: String): Pair<Boolean,Boolean> {
+        var respuesta1 = false
+        var respuesta2 = false
+        for (element in lista_actual) {
+            if (element.id == idProceso.toInt()) {
+                respuesta1 = true // Elemento duplicado
+            }
+            if(element.tiempoLlegada == tiempoLlegada.toInt()){
+                respuesta2 = true
             }
         }
-        return false // No hay duplicados
+        return Pair(respuesta1,respuesta2) // No hay elementos duplicados
     }
 }
