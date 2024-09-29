@@ -12,12 +12,18 @@ class activityTeorica2 : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activityteorica2)
         val btnSiguiente: Button = findViewById(R.id.btnComenzar)
+        val btnRetroceder: Button = findViewById(R.id.btnAtras)
 
         // Manejar el clic del botón para avanzar
         btnSiguiente.setOnClickListener {
-            // Inicia una nueva actividad o haz otra acción
-            val intent = Intent(this, activityFuncionales1::class.java)
-            startActivity(intent)
+            // Inicia nueva actividad
+            val intentComenzar = Intent(this, activityFuncionales1::class.java)
+            startActivity(intentComenzar)
+        }
+        btnRetroceder.setOnClickListener {
+            // Inicia nueva actividad
+            val intentAtras = Intent(this, activityTeorica1::class.java)
+            startActivity(intentAtras)
         }
     }
 }

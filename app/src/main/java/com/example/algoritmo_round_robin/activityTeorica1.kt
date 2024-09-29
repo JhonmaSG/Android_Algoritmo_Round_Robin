@@ -16,11 +16,18 @@ class activityTeorica1 : AppCompatActivity() {
         para el proceso del calculo del algoritmo*/
 
         val btnSiguiente: Button = findViewById(R.id.btnContinuar)
+        val btnRetroceder: Button = findViewById(R.id.btnAtras)
 
         btnSiguiente.setOnClickListener {
             // Inicia una nueva actividad o haz otra acción
-            val intent = Intent(this, activityTeorica2::class.java)
-            startActivity(intent)
+            val intentAvanzar = Intent(this, activityTeorica2::class.java)
+            startActivity(intentAvanzar)
+        }
+
+        btnRetroceder.setOnClickListener {
+            // Inicia una nueva actividad o haz otra acción
+            val intentAtras = Intent(this, MainActivity::class.java)
+            startActivity(intentAtras)
         }
     }
 }
