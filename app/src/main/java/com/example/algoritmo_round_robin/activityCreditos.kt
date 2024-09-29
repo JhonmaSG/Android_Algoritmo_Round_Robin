@@ -6,19 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
-class activity_funcionales_1 : AppCompatActivity() {
+class activityCreditos : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_funcionales_1)
-        // Acá se debe realizar un ejemplo funcional del algoritmo Round Robin donde se evidencie
-        // todo el proceso desde la carga de los procesos:
-        // - asignación de tiempos de ráfaga,
-        // - linea de tiempo
-        // - calculo del tiempo de espera
-        // - finalización de cada proceso,
-        // - tiempo promedio de espera
-        // - tiempo promedio de finalización
+        setContentView(R.layout.activity_creditos)
+        /* Se debe mostrar el nombre de los estudiantes que realizaron el proyecto */
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

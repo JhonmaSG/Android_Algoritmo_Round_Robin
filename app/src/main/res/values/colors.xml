@@ -2,5 +2,6 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="background_color">#FFD700</color> <!-- Un color dorado -->
+    <color name="background_color_dorado">#FFD700</color> <!-- Color dorado -->
+    <color name="background_color_amarillo">#FFF3B4</color> <!-- Color aguamarina clara -->
 </resources>

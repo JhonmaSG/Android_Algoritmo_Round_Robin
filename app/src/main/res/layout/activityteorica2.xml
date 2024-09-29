@@ -5,10 +5,10 @@
     android:id="@+id/roundRobinLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_color"
+    android:background="@color/background_color_dorado"
     android:fitsSystemWindows="true"
     android:padding="16dp"
-    tools:context=".activity_teorica_2">
+    tools:context=".activityTeorica2">
 
     <!-- Título -->
 

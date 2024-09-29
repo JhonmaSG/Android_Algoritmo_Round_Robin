@@ -5,14 +5,12 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
-class activity_teorica_1 : AppCompatActivity() {
+class activityTeorica1 : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_teorica_1)
+        setContentView(R.layout.activityteorica1)
         /*Realizar un mini tutorial sobre el funcionamiento
         del algoritmo, se debe mostrar las formulas usadas
         para el proceso del calculo del algoritmo*/
@@ -21,7 +19,7 @@ class activity_teorica_1 : AppCompatActivity() {
 
         btnSiguiente.setOnClickListener {
             // Inicia una nueva actividad o haz otra acción
-            val intent = Intent(this, activity_teorica_2::class.java)
+            val intent = Intent(this, activityTeorica2::class.java)
             startActivity(intent)
         }
     }

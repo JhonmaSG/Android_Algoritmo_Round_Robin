@@ -13,16 +13,16 @@
         android:theme="@style/Theme.Algoritmo_Round_Robin"
         tools:targetApi="31">
         <activity
-            android:name=".activity_teorica_2"
+            android:name=".activityTeorica2"
             android:exported="false" />
         <activity
-            android:name=".activity_creditos"
+            android:name=".activityCreditos"
             android:exported="false" />
         <activity
-            android:name=".activity_funcionales_1"
+            android:name=".activityFuncionales1"
             android:exported="false" />
         <activity
-            android:name=".activity_teorica_1"
+            android:name=".activityTeorica1"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
