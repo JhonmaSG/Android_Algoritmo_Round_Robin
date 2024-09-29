@@ -52,8 +52,8 @@
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="307dp"
-        android:layout_height="144dp"
+        android:layout_width="350dp"
+        android:layout_height="142dp"
         android:text="Esta app te guiará paso a paso para entender cómo funciona este método de planificación, optimizando el uso de recursos al repartir el tiempo de CPU de manera equitativa entre los procesos. ¡Comencemos!"
         android:textAlignment="center"
         android:textColor="#000000"
