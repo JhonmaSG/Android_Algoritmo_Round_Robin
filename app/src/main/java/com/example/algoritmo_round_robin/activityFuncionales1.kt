@@ -1,7 +1,10 @@
 package com.example.algoritmo_round_robin
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Parcel
+import android.os.Parcelable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -161,8 +164,79 @@ class activityFuncionales1 : AppCompatActivity() {
         }
     }
 
-    private fun simular() {
+    private fun mostrarResultados(tiempoEsperaPromedio: Double, tiempoFinalizacionPromedio: Double) {
+        val resultados = StringBuilder()
+        resultados.append("Resultados de la Simulación Round Robin:\n")
+        resultados.append("Valor del Quantum: ${quantum}\n\n")
+        listaProcesos.forEach { proceso ->
+            resultados.append("Color: ${proceso.color}\n")
+            resultados.append("Proceso: ${proceso.nombre}\n")
+            resultados.append("Tiempo de llegada: ${proceso.tiempoLlegada}\n")
+            resultados.append("Ráfaga: ${proceso.rafaga}\n")
+            resultados.append("Tiempo de finalización: ${proceso.tiempoFinalizacion}\n")
+            resultados.append("Tiempo de espera: ${proceso.tiempoEspera}\n")
+            resultados.append("\n")
+        }
 
+        resultados.append("Tiempo promedio de espera: $tiempoEsperaPromedio\n")
+        resultados.append("Tiempo promedio de finalización: $tiempoFinalizacionPromedio\n")
+
+        // Crear un Intent para abrir la nueva actividad y pasar los resultados
+        val intent = Intent(this, activityFuncionales2::class.java)
+        intent.putExtra("resultados", resultados.toString())
+        startActivity(intent)
+
+    }
+
+    private fun simular() {
+        if (listaProcesos.isEmpty()) {
+            Toast.makeText(this, "No hay procesos para simular", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val colaProcesos = listaProcesos.toMutableList() // Crear una lista mutable de procesos
+        colaProcesos.sortBy { it.tiempoLlegada } // Ordenar por tiempo de llegada
+        var tiempoTotal = 0 // Tiempo total transcurrido
+        val quantum = quantum ?: return // Asegurarnos de que el quantum esté establecido
+
+        // Imprimir la lista de procesos ordenada
+        println("Lista de procesos ordenada por tiempo de llegada:")
+        colaProcesos.forEach { println(it) }
+
+        // Mientras haya procesos con tiempo de ráfaga restante
+        while (colaProcesos.isNotEmpty()) {
+            val iterator = colaProcesos.iterator()
+
+            while (iterator.hasNext()) {
+                val proceso = iterator.next()
+
+                if (proceso.tiempoRestante > 0) {
+                    // Si el proceso puede ejecutarse completamente dentro del quantum
+                    if (proceso.tiempoRestante <= quantum) {
+                        tiempoTotal += proceso.tiempoRestante // Aumentar el tiempo total
+                        proceso.tiempoRestante = 0 // El proceso ha terminado
+                        proceso.tiempoFinalizacion = tiempoTotal // Registrar el tiempo de finalización
+                    } else {
+                        // Si no puede completarse, ejecuta por el quantum y resta tiempo restante
+                        proceso.tiempoRestante -= quantum
+                        tiempoTotal += quantum
+                    }
+                }
+
+                // Si el proceso ha terminado, calcular su tiempo de espera
+                if (proceso.tiempoRestante == 0) {
+                    proceso.tiempoEspera = proceso.tiempoFinalizacion - proceso.tiempoLlegada - proceso.rafaga
+                    iterator.remove() // Remover el proceso de la cola
+                }
+            }
+        }
+
+        // Cálculo de los tiempos promedios
+        val tiempoEsperaPromedio = listaProcesos.sumOf { it.tiempoEspera } / listaProcesos.size.toDouble()
+        val tiempoFinalizacionPromedio = listaProcesos.sumOf { it.tiempoFinalizacion } / listaProcesos.size.toDouble()
+
+        // Mostrar los resultados
+        mostrarResultados(tiempoEsperaPromedio, tiempoFinalizacionPromedio)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -210,10 +284,50 @@ class activityFuncionales1 : AppCompatActivity() {
 
     // Clase de datos para representar un proceso
     data class Proceso(
-        val nombre: String,
-        val quantum: Int,
-        val tiempoLlegada: Int,
-        val rafaga: Int,
-        val color: String
-    )
+        val nombre: String, //Nombre del proceso
+        val quantum: Int,   //quantum
+        val tiempoLlegada: Int, //tiempo de llegada
+        val rafaga: Int,    //rafaga
+        val color: String,  //color del proceso
+        var tiempoRestante: Int = rafaga, //tiempo que le queda por ejecutar
+        var tiempoEspera: Int = 0, // tiempo total de espera
+        var tiempoFinalizacion: Int = 0 //tiempo en que termina
+    ) : Parcelable {
+
+        constructor(parcel: Parcel) : this(
+            parcel.readString() ?: "",
+            parcel.readInt(),
+            parcel.readInt(),
+            parcel.readInt(),
+            parcel.readString() ?: "",
+            parcel.readInt(),
+            parcel.readInt(),
+            parcel.readInt()
+        )
+
+        override fun writeToParcel(parcel: Parcel, flags: Int) {
+            parcel.writeString(nombre)
+            parcel.writeInt(quantum)
+            parcel.writeInt(tiempoLlegada)
+            parcel.writeInt(rafaga)
+            parcel.writeString(color)
+            parcel.writeInt(tiempoRestante)
+            parcel.writeInt(tiempoEspera)
+            parcel.writeInt(tiempoFinalizacion)
+        }
+
+        override fun describeContents(): Int {
+            return 0
+        }
+
+        companion object CREATOR : Parcelable.Creator<Proceso> {
+            override fun createFromParcel(parcel: Parcel): Proceso {
+                return Proceso(parcel)
+            }
+
+            override fun newArray(size: Int): Array<Proceso?> {
+                return arrayOfNulls(size)
+            }
+        }
+    }
 }

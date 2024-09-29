@@ -13,6 +13,12 @@
         android:theme="@style/Theme.Algoritmo_Round_Robin"
         tools:targetApi="31">
         <activity
+            android:name=".activityFuncionales3"
+            android:exported="false" />
+        <activity
+            android:name=".activityFuncionales2"
+            android:exported="false" />
+        <activity
             android:name=".ProcesoAdapter"
             android:exported="false" />
         <activity
