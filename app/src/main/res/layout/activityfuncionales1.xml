@@ -28,7 +28,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:hint="Quantum"
+        android:hint="Ingrese el Quantum"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -96,8 +96,9 @@
     <!-- RecyclerView para mostrar la lista de procesos -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewProcesos"
-        android:layout_width="384dp"
-        android:layout_height="283dp"
+        android:layout_width="363dp"
+        android:layout_height="284dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:clipToPadding="false"
         android:padding="8dp"
