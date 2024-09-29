@@ -11,6 +11,8 @@
     tools:context=".activity_teorica_2">
 
     <!-- Título -->
+
+    <!-- Diagrama o Imagen Explicativa -->
     <TextView
         android:id="@+id/txtTitleRR"
         android:layout_width="wrap_content"
@@ -24,57 +26,71 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.054" />
-
-    <TextView
-        android:id="@+id/txtDescriptionRR"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="16dp"
-        android:text="Asigna a cada proceso un tiempo fijo de ejecución denominado quantum. Si un proceso no ha terminado en ese tiempo, se pasa al siguiente en la cola."
-        android:textColor="@android:color/black"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtTitleRR" />
-
-    <!-- Diagrama o Imagen Explicativa -->
-    <TextView
-        android:id="@+id/txtFeaturesTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:text="Se debe tener en cuenta:"
-        android:textColor="#900000"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.044"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtDescriptionRR" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <!-- Explicación de un Ejemplo -->
 
     <!-- Botón para continuar -->
 
     <TextView
+        android:id="@+id/txtDescriptionRR"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="Asigna a cada proceso un tiempo fijo de ejecución denominado quantum. Si un proceso no ha terminado en ese tiempo pasa a cola."
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtTitleRR" />
+
+    <TextView
+        android:id="@+id/txtFeaturesTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Se debe tener en cuenta:"
+        android:textColor="#900000"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtDescriptionRR" />
+
+    <TextView
+        android:id="@+id/txtFormulas"
+        android:layout_width="370dp"
+        android:layout_height="236dp"
+        android:layout_marginTop="24dp"
+        android:text="Tiempo de Finalización\nCT = Tiempo en que el proceso termina\n\n Tiempo de Retorno o Tiempo de Ejecución Total\n TAT = CT−Tiempo de llegada\n\nTiempo de Espera\nWT = TAT − Ráfaga de CPU\n\nTiempo de Respuesta\nRT = Tiempo proceso inicia − Tiempo de llegada (AT)"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtFeatures" />
+
+    <TextView
         android:id="@+id/txtFeatures"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:text="  • Tiempo de llegada:\nMomento en que un proceso llega al sistema y está listo para ser ejecutado por la CPU. El tiempo de llegada determina el orden en que los procesos se colocan en la cola de ejecución.\n\n  • Quantum fijo\nIntervalo de tiempo predefinido durante el cual un proceso puede ejecutarse en la CPU en ciclos\n\n  • Rafaga\ncantidad de tiempo que un proceso necesita para ejecutar su tarea en la CPU. Puede referirse a la ráfaga de CPU"
+        android:text="  • Tiempo de llegada:\nMomento en que un proceso llega al sistema y está listo para ser ejecutado por la CPU.\n\n  • Quantum fijo\nIntervalo de tiempo predefinido durante el cual un proceso puede ejecutarse en la CPU en ciclos\n\n  • Rafaga\nCantidad de tiempo que un proceso necesita para ejecutarse. Puede referirse a la ráfaga de CPU"
         android:textColor="@android:color/black"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txtFeaturesTitle" />
 
@@ -82,11 +98,14 @@
         android:id="@+id/btnComenzar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:backgroundTint="#333333"
         android:text="Comenzar"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtFormulas" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
