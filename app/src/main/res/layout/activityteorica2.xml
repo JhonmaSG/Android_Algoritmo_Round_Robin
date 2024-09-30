@@ -10,9 +10,6 @@
     android:padding="16dp"
     tools:context=".activityTeorica2">
 
-    <!-- Título -->
-
-    <!-- Diagrama o Imagen Explicativa -->
     <TextView
         android:id="@+id/txtTitleRR"
         android:layout_width="wrap_content"
@@ -28,11 +25,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <!-- Explicación de un Ejemplo -->
-
-    <!-- Botón para continuar -->
+        app:layout_constraintVertical_bias="0.025" />
 
     <TextView
         android:id="@+id/txtDescriptionRR"
