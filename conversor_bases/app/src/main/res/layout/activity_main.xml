@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="136dp"
+        android:layout_marginTop="67dp"
+        android:layout_marginEnd="127dp"
+        android:layout_marginBottom="645dp"
+        android:shadowColor="#450606"
+        android:text="CONVERSOR BASES NUMERICAS"
+        android:textColor="#03A9F4"
+        android:textColorHighlight="#270101"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/roper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="95dp"
+        android:layout_marginTop="143dp"
+        android:layout_marginEnd="95dp"
+        android:layout_marginBottom="101dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtnum1">
+
+        <RadioButton
+            android:id="@+id/rbinario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="BINARIO" />
+
+        <RadioButton
+            android:id="@+id/roctal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="OCTAL" />
+
+        <RadioButton
+            android:id="@+id/rhexa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="HEXADECIMAL" />
+
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginEnd="270dp"
+        android:layout_marginBottom="100dp"
+        android:text="Resultado:"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.843"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/txtresult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="27dp"
+        android:layout_marginEnd="184dp"
+        android:layout_marginBottom="130dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.474"
+        app:layout_constraintStart_toEndOf="@+id/textView2" />
+
+    <Button
+        android:id="@+id/btncalcular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="146dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="146dp"
+        android:layout_marginBottom="176dp"
+        android:text="CONVERTIR"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/roper" />
+
+    <EditText
+        android:id="@+id/edtnum1"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="50dp"
+        android:ems="10"
+        android:hint="INGRESE NUMERO A CONVERTIR"
+        android:inputType="number"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="200dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="195dp"
+        android:layout_marginBottom="72dp"
+        android:text="SELECCIONE A QUE BASE CONVERTIR:"
+        android:textColor="#009688"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/roper"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtnum1" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tvExplanation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="El algoritmo de planificación Round Robin asigna un tiempo fijo a cada proceso, llamado 'quantum'. El proceso se ejecuta durante ese tiempo o menos si termina antes. Si no termina, regresa a la cola de procesos. Las fórmulas más usadas son:"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tvFormulas"
+        android:layout_width="wrap_content"
+        android:layout_height="81dp"
+        android:text="Tiempo de espera = Tiempo finalización - Tiempo ráfaga - Tiempo llegada"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/btnNext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ir a Ejemplo" />
+</LinearLayout>
