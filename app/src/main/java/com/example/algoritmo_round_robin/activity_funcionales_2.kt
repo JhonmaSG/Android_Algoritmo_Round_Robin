@@ -183,6 +183,8 @@ class activity_funcionales_2 : AppCompatActivity() {
             "Proceso ${proceso.id}: Llegada: ${proceso.tiempoLlegada}, Tiempo de Finalización: ${proceso.tiempoFinalizacion}"
         }
 
+        //Revisar Salto de linea JhonmaSG
+
         // Concatenar todos los resultados en una sola cadena
         resultadosTextView.text = """
         Procesos Terminados:
