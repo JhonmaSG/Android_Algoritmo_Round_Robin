@@ -10,10 +10,10 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
 class activity_funcionales_2 : AppCompatActivity() {
+    private var quantum: Int = 0
     private lateinit var lista_principal: MutableList<Datos>
     private lateinit var lista_terminados: MutableList<Datos>
     private lateinit var lista_pendientes: MutableList<Datos>
-    private var quantum = 4 // Valor de quantum, ajustable
     private var tiempoGlobal: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,9 +21,13 @@ class activity_funcionales_2 : AppCompatActivity() {
         setContentView(R.layout.activity_funcionales_2)
 
         // Recuperar los datos pasados desde la primera actividad
-        val lista_principal = intent.getSerializableExtra("listaPrincipal") as MutableList<Datos>
+        lista_principal = intent.getSerializableExtra("listaPrincipal") as MutableList<Datos> // Aquí corregido
         lista_terminados = mutableListOf()
         lista_pendientes = lista_principal.toMutableList()
+
+        // Recuperar el quantum pasado como extra
+        val quantum = intent.getIntExtra("quantum", 4) // Si no se encuentra, toma 4 como valor predeterminado
+        this.quantum = quantum // Asignar el quantum al valor recibido
 
         lista_principal.forEachIndexed { index, list ->
             Log.d("MasterList", "Lista acti 2 $index: $list")
@@ -153,15 +157,41 @@ class activity_funcionales_2 : AppCompatActivity() {
         }
     }
 
-    private fun mostrarResultados(resultadosTextView : TextView) {
+    private fun calcularTiempoFinalizacionPromedio(listaTerminados: List<Datos>): Double {
+        val sumaTiempoFinalizacion = listaTerminados.sumOf { it.tiempoFinalizacion }
+        return sumaTiempoFinalizacion.toDouble() / listaTerminados.size
+    }
+
+    private fun calcularTiempoEsperaPromedio(listaTerminados: List<Datos>, listaOriginal: List<Datos>): Double {
+        var sumaTiempoEspera = 0
+        listaTerminados.forEach { proceso ->
+            val tiempoRafagaOriginal = listaOriginal.first { it.id == proceso.id }.tiempoRafaga
+            val tiempoEspera = proceso.tiempoFinalizacion - proceso.tiempoLlegada - tiempoRafagaOriginal
+            sumaTiempoEspera += tiempoEspera
+        }
+        return sumaTiempoEspera.toDouble() / listaTerminados.size
+    }
+
+
+    private fun mostrarResultados(resultadosTextView: TextView) {
+
+        val tiempoFinalizacionPromedio = calcularTiempoFinalizacionPromedio(lista_terminados)
+        val tiempoEsperaPromedio = calcularTiempoEsperaPromedio(lista_terminados, lista_principal)
 
         // Mostrar lista de procesos terminados con el tiempo total acumulado
-        val resultadosTerminados = lista_terminados.joinToString(separator = "\n"){ proceso ->
-            "Proceso: ${proceso.id}, Llegada: ${proceso.tiempoLlegada}, Tiempo de Finaliazación: ${proceso.tiempoFinalizacion}"
+        val resultadosTerminados = lista_terminados.joinToString(separator = "\n") { proceso ->
+            "Proceso ${proceso.id}: Llegada: ${proceso.tiempoLlegada}, Tiempo de Finalización: ${proceso.tiempoFinalizacion}"
         }
 
-        // Concatenar y mostrar los resultados en el TextView
-        resultadosTextView.text = "Procesos Terminados:\n$resultadosTerminados"+ "\nCon un tiempo total de proceso de\n$tiempoGlobal"
+        // Concatenar todos los resultados en una sola cadena
+        resultadosTextView.text = """
+        Procesos Terminados:
+
+        $resultadosTerminados
+        Tiempo total de proceso de: $tiempoGlobal
+        Tiempo Promedio de Finalización: ${String.format("%.2f", tiempoFinalizacionPromedio)}
+        Tiempo Promedio de Espera: ${String.format("%.2f", tiempoEsperaPromedio)}
+    """.trimIndent()
     }
 
 }

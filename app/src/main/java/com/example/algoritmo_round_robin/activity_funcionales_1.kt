@@ -35,6 +35,7 @@ class activity_funcionales_1 : AppCompatActivity() {
         lista_actual = mutableListOf()
 
         // Referenciar los elementos de la interfaz (suponiendo que tienes dos EditText y un Button)
+        val numero_quantum = findViewById<EditText>(R.id.quantum)
         val numero_proceso = findViewById<EditText>(R.id.numero_proceso)
         val tiempo_rafaga = findViewById<EditText>(R.id.tiempo_rafaga)
         val tiempo_llegada = findViewById<EditText>(R.id.tiempo_llegada)
@@ -90,13 +91,19 @@ class activity_funcionales_1 : AppCompatActivity() {
 
 
         ver_procesos.setOnClickListener {
+            // Verificar que el campo de quantum no esté vacío
+            val quantum = numero_quantum.text.toString()
 
-            // Crear un Intent para ir a activity_funcionales_2
-            val intent = Intent(this, activity_funcionales_2::class.java)
-            intent.putExtra("listaPrincipal", lista_actual as Serializable) // Pasar lista_principal como un extra
+            if (quantum.isNotEmpty()) {
+                // Crear un Intent para ir a activity_funcionales_2
+                val intent = Intent(this, activity_funcionales_2::class.java)
+                intent.putExtra("listaPrincipal", lista_actual as Serializable) // Pasar lista_principal como un extra
+                intent.putExtra("quantum", quantum.toInt()) // Pasar el quantum ingresado como extra
 
-            startActivity(intent) // Iniciar la nueva actividad
-
+                startActivity(intent) // Iniciar la nueva actividad
+            } else {
+                Toast.makeText(this, "Por favor, ingrese un valor para el quantum.", Toast.LENGTH_SHORT).show()
+            }
         }
 
 
