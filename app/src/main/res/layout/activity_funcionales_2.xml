@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -9,33 +16,87 @@
     <!-- Contenedor para la línea de tiempo (marcar cada proceso) -->
     <HorizontalScrollView
         android:layout_width="378dp"
-        android:layout_height="219dp"
+        android:layout_height="196dp"
         android:padding="8dp"
         android:scrollbars="none">
 
-        <LinearLayout
-            android:id="@+id/line_chart"
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="150dp"
             android:background="#E0E0E0"
-            android:orientation="horizontal"
             android:padding="4dp">
 
-            <!-- Esta sección será dinámica para agregar las líneas de procesos (Views) -->
+            <!-- Línea horizontal que se mostrará en la parte superior -->
+            <View
+                android:id="@+id/linea_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_centerVertical="true"
+                android:background="#FFFF00" />
 
-        </LinearLayout>
+            <LinearLayout
+                android:id="@+id/line_chart"
+                android:layout_width="wrap_content"
+                android:layout_height="150dp"
+                android:background="#E0E0E0"
+                android:orientation="horizontal"
+                android:padding="4dp">
+
+
+            </LinearLayout>
+        </RelativeLayout>
     </HorizontalScrollView>
 
-    <!-- TextView para mostrar la lista de resultados (número de proceso, tiempo de llegada y tiempo total) -->
     <TextView
-        android:id="@+id/resultados_text_view"
+        android:id="@+id/proceso_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Resultados del Algoritmo Round Robin"
-        android:textAlignment="viewStart"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@android:color/black"
-        android:textSize="14sp"
-        android:textStyle="bold" />
+        android:padding="8dp"
+        android:layout_margin="10dp"
+        android:text="" />
+
+    <TableLayout
+        android:id="@+id/resultadosTable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:padding="8dp"
+        android:stretchColumns="1">
+
+        <TableRow android:layout_height="109dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Proceso" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Llegada" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Tiempo de Espera" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Tiempo de Finalización" />
+        </TableRow>
+        <!-- Aquí se agregarán las filas de resultados -->
+    </TableLayout>
+
+
+
 </LinearLayout>
+    </ScrollView>

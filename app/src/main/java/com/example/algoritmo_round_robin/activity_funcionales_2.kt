@@ -2,10 +2,14 @@ package com.example.algoritmo_round_robin
 
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.TableLayout
+import android.widget.TableRow
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
@@ -33,62 +37,89 @@ class activity_funcionales_2 : AppCompatActivity() {
             Log.d("MasterList", "Lista acti 2 $index: $list")
         }
 
+        //Inicializar el TextView para mostrar los procesos
+        val procesoText = findViewById<TextView>(R.id.proceso_text)
+
         // Inicializar el TextView para mostrar los resultados
-        val resultadosTextView = findViewById<TextView>(R.id.resultados_text_view)
-        val lineChart = findViewById<LinearLayout>(R.id.line_chart) // Asume que tienes un LinearLayout para mostrar la línea horizontal.
+        val resultadosTextView = findViewById<TableLayout>(R.id.resultadosTable)
+
 
         // Ejecutar el algoritmo de Round Robin
-        ejecutarRoundRobin()
+        ejecutarRoundRobin(procesoText)
 
         mostrarProgresoDinamico()
 
         // Mostrar los resultados en un TextView
         mostrarResultados(resultadosTextView)
 
+        Log.d("Acabo2", "Lista de procesos terminados:")
+        // Mostrar la lista final de procesos terminados
+        lista_terminados.forEach { proceso ->
+            Log.d(
+                "Acabo2",
+                "Proceso ${proceso.id}: Tiempo de Llegada = ${proceso.tiempoLlegada}, " +
+                        "Tiempo de Finalización = ${proceso.tiempoFinalizacion}, " +
+                        "Tiempo de Espera = ${proceso.tiempoFinalizacion - proceso.tiempoLlegada}"
+            )
+        }
     }
 
 
-    private fun ejecutarRoundRobin() {
-
+    private fun ejecutarRoundRobin(proceso_text: TextView) {
+        val procesosFinalizados = mutableListOf<Datos>()
         try{
-        // Ordenar la lista inicial por el tiempo de llegada para asegurar el orden correcto
-        lista_pendientes.sortBy { it.tiempoLlegada }
-        tiempoGlobal = lista_pendientes[0].tiempoLlegada // Iniciar el tiempo total con el tiempo de llegada del primer proceso
+
+            lista_pendientes.sortBy { it.tiempoLlegada }
+            tiempoGlobal = lista_pendientes[0].tiempoLlegada // Iniciar el tiempo total con el tiempo de llegada del primer proceso
+            val sb = StringBuilder()
+
             Log.e("RoundRobinError", "Error en Round Robin: ${lista_pendientes[0]}")
-        while (lista_pendientes.isNotEmpty()) {
-            val procesoActual = lista_pendientes.removeAt(0) // Obtener el primer proceso
+            while (lista_pendientes.isNotEmpty()) {
+                val procesoActual = lista_pendientes.removeAt(0) // Obtener el primer proceso
+                Log.d("ProcesoActual", "Procesando P${procesoActual.id} - Tiempo de Llegada: ${procesoActual.tiempoLlegada}, Tiempo de Ráfaga Restante: ${procesoActual.tiempoRafaga}")
 
-            if (procesoActual.tiempoRafaga <= quantum) {
-                // El proceso termina en este quantum
-                tiempoGlobal += procesoActual.tiempoRafaga // Incrementar el tiempo total con el tiempo de ráfaga
-                procesoActual.tiempoRafaga = 0 // El proceso ya terminó, ráfaga a 0
+                // Si el tiempo de ráfaga es menor o igual al quantum, el proceso se completa
+                if (procesoActual.tiempoRafaga <= quantum) {
+                    tiempoGlobal += procesoActual.tiempoRafaga // Incrementar el tiempo total con el tiempo de ráfaga
+                    procesoActual.tiempoFinalizacion = tiempoGlobal
+                    lista_terminados.add(procesoActual) // Mover proceso a lista de terminados
 
-                // Guardar el tiempo de finalización para este proceso
-                procesoActual.tiempoFinalizacion = tiempoGlobal
-                lista_terminados.add(procesoActual) // Mover proceso a lista de terminados
-            } else {
-                // El proceso no termina, reducir el tiempo de ráfaga y volver a añadirlo a pendientes
-                tiempoGlobal += quantum
-                procesoActual.tiempoRafaga -= quantum
-                lista_pendientes.add(procesoActual) // Añadir el proceso nuevamente a la lista de pendientes
-            }
+                    // Calcular el tiempo de espera
+                    val tiempoEspera = procesoActual.tiempoFinalizacion - procesoActual.tiempoLlegada - procesoActual.tiempoRafaga
+                    sb.append("↓\nProceso ${procesoActual.id}: Terminado. Tiempo de Espera: $tiempoEspera\n")
+                } else {
+                    // Si el proceso no termina en este quantum, restar el quantum a la ráfaga
+                    tiempoGlobal += quantum
+                    procesoActual.tiempoRafaga -= quantum
+                    lista_pendientes.add(procesoActual) // Reagregar el proceso a la lista de pendientes
 
-            // Si quedan procesos pendientes, actualizar su tiempo de llegada basado en el tiempo total actual
-            if (lista_pendientes.isNotEmpty()) {
-                val siguienteProceso = lista_pendientes[0]
-                if (tiempoGlobal < siguienteProceso.tiempoLlegada) {
-                    tiempoGlobal = siguienteProceso.tiempoLlegada // Ajustar el tiempo total si el siguiente proceso no ha llegado aún
+                    sb.append("↓\nProceso ${procesoActual.id}: Ejecutando... Tiempo de Ráfaga Restante: ${procesoActual.tiempoRafaga}\n")
                 }
             }
-        }
+
+            // Mostrar el resumen final en el `TextView`
+            sb.append("↓\nAlgoritmo completado. Total de procesos: ${lista_terminados.size}\n")
+            runOnUiThread {
+                proceso_text.text = sb.toString()
+            }
+        // Primer retraso de 1 segundo para iniciar
         }catch (e: Exception){
             Log.e("RoundRobinError", "Error en Round Robin: ${e.message}")
         }
+
+        // Cuando termines el ciclo
+        if (lista_terminados.isNotEmpty()) {
+            procesosFinalizados.addAll(lista_terminados)
+            Log.d("Finalizados", "Lista de procesos finalizados: $procesosFinalizados")
+        } else {
+            Log.d("Finalizados", "No hay procesos finalizados.")
+        }
     }
 
+    //------------------------------------------------------------------------------------------------------
     private fun mostrarProgresoDinamico() {
         val lineChart = findViewById<LinearLayout>(R.id.line_chart) // Contenedor en el XML para las líneas de proceso
-
+        val lineaHorizontal = findViewById<View>(R.id.linea_horizontal)
         // Verificar el estado de la lista antes de proceder
         if (lista_terminados.isEmpty()) {
             Log.d("Debug", "La lista de procesos terminados está vacía.")
@@ -122,7 +153,7 @@ class activity_funcionales_2 : AppCompatActivity() {
 
             // Crear un TextView para mostrar el tiempo de finalización
             val tiempoFinalizacionTextView = TextView(this).apply {
-                text = "T. Final: ${proceso.tiempoFinalizacion ?: "N/A"}" // Asegúrate de que el dato no sea nulo
+                text = "T.F: ${proceso.tiempoFinalizacion ?: "N/A"}" // Asegúrate de que el dato no sea nulo
                 textSize = 12f // Tamaño de texto (puedes ajustarlo)
                 setPadding(8, 8, 8, 0) // Espaciado interno del TextView
                 gravity = Gravity.CENTER // Centrar el texto horizontalmente
@@ -138,22 +169,42 @@ class activity_funcionales_2 : AppCompatActivity() {
             val contenedorProceso = LinearLayout(this).apply {
                 orientation = LinearLayout.VERTICAL // Vista en vertical
                 gravity = Gravity.CENTER
-                setPadding(20, 0, 20, 0) // Espaciado entre cada contenedor de proceso (ajusta aquí el espaciado entre líneas)
+                setPadding(10, 0, 10, 0) // Espaciado entre cada contenedor de proceso (ajusta aquí el espaciado entre líneas)
                 layoutParams = LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
                 ).apply {
-                    setMargins(40, 0, 40, 0) // Márgenes alrededor de cada contenedor de proceso (para alejarlos más)
+                    setMargins(20, 0, 20, 0) // Márgenes alrededor de cada contenedor de proceso (para alejarlos más)
                 }
             }
 
             // Añadir las vistas al contenedor
             contenedorProceso.addView(numeroProcesoTextView) // Añadir el número del proceso
             contenedorProceso.addView(lineView) // Añadir la línea del proceso
+
+
+            val lineaHorizontal = View(this).apply {
+                layoutParams = LinearLayout.LayoutParams(
+                    0, // Ancho de la línea (ajusta este valor)
+                    5 // Alto de la línea horizontal (ajusta este valor)
+                ).apply {
+                    weight = 1f // Esto permite que la línea ocupe el espacio restante
+                    setMargins(20, 0, 20, 0) // Márgenes para alejar la línea horizontal
+                }
+                setBackgroundColor(Color.YELLOW) // Color de la línea
+            }
+
+            // Añadir la línea horizontal al contenedor
+            contenedorProceso.addView(lineaHorizontal)
+
             contenedorProceso.addView(tiempoFinalizacionTextView) // Añadir el tiempo de finalización
 
             // Añadir el contenedor del proceso al contenedor principal (lineChart)
             lineChart.addView(contenedorProceso)
+        }
+        // Ajustar la línea horizontal para que tenga el mismo ancho que el contenedor principal
+        lineaHorizontal.layoutParams = lineaHorizontal.layoutParams.apply {
+            width = lineChart.width // Asignar el ancho del contenedor
         }
     }
 
@@ -172,28 +223,93 @@ class activity_funcionales_2 : AppCompatActivity() {
         return sumaTiempoEspera.toDouble() / listaTerminados.size
     }
 
-
-    private fun mostrarResultados(resultadosTextView: TextView) {
+//------------------------------------------------------------------------------------------------------------------
+    private fun mostrarResultados(resultadosTable: TableLayout) {
 
         val tiempoFinalizacionPromedio = calcularTiempoFinalizacionPromedio(lista_terminados)
         val tiempoEsperaPromedio = calcularTiempoEsperaPromedio(lista_terminados, lista_principal)
 
         // Mostrar lista de procesos terminados con el tiempo total acumulado
-        val resultadosTerminados = lista_terminados.joinToString(separator = "\n") { proceso ->
-            "Proceso ${proceso.id}: Llegada: ${proceso.tiempoLlegada}, Tiempo de Finalización: ${proceso.tiempoFinalizacion}"
+        lista_terminados.forEach { proceso ->
+            val row = TableRow(this)
+
+            val tvId = TextView(this).apply {
+                text = proceso.id.toString()
+                gravity = Gravity.CENTER
+                layoutParams = TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f) // Usar weight para distribuir
+                setBackgroundColor(Color.WHITE)
+            }
+
+            val tvLlegada = TextView(this).apply {
+                text = proceso.tiempoLlegada.toString()
+                gravity = Gravity.CENTER
+                layoutParams = TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f) // Usar weight para distribuir
+                setBackgroundColor(Color.WHITE)
+            }
+
+            val tvEsperaFinal = TextView(this).apply {
+                text = proceso.tiempoEspera.toString()
+                gravity = Gravity.CENTER
+                layoutParams = TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f) // Usar weight para distribuir
+                setBackgroundColor(Color.WHITE)
+            }
+
+            val tvFinalizacion = TextView(this).apply {
+                text = proceso.tiempoFinalizacion.toString()
+                gravity = Gravity.CENTER
+                layoutParams = TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f) // Usar weight para distribuir
+                setBackgroundColor(Color.WHITE)
+            }
+
+            row.addView(tvId)
+            row.addView(tvLlegada)
+            row.addView(tvEsperaFinal)
+            row.addView(tvFinalizacion)
+            resultadosTable.addView(row)
         }
 
-        //Revisar Salto de linea JhonmaSG
+        // Agregar los tiempos promedio
 
-        // Concatenar todos los resultados en una sola cadena
-        resultadosTextView.text = """
-        Procesos Terminados:
+        // Crear y agregar TextView para el tiempo total
+        val tiempoTotalRow = TableRow(this).apply {
+            layoutParams = TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT)
+        }
+        val tvTiempoTotal = TextView(this).apply {
+            text = "Tiempo total de proceso de: $tiempoGlobal"
+            gravity = Gravity.START
+            setPadding(8, 8, 8, 8)
+            layoutParams = TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT)
+        }
+        tiempoTotalRow.addView(tvTiempoTotal)
+        resultadosTable.addView(tiempoTotalRow)
 
-        $resultadosTerminados
-        Tiempo total de proceso de: $tiempoGlobal
-        Tiempo Promedio de Finalización: ${String.format("%.2f", tiempoFinalizacionPromedio)}
-        Tiempo Promedio de Espera: ${String.format("%.2f", tiempoEsperaPromedio)}
-    """.trimIndent()
+// Crear y agregar TextView para el tiempo promedio de finalización
+        val tiempoFinalizacionRow = TableRow(this).apply {
+            layoutParams = TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT)
+        }
+        val tvTiempoFinalizacionPromedio = TextView(this).apply {
+            text = "Tiempo Promedio de Finalización: ${String.format("%.2f", tiempoFinalizacionPromedio)}"
+            gravity = Gravity.START
+            setPadding(8, 8, 8, 8)
+            layoutParams = TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT)
+        }
+        tiempoFinalizacionRow.addView(tvTiempoFinalizacionPromedio)
+        resultadosTable.addView(tiempoFinalizacionRow)
+
+// Crear y agregar TextView para el tiempo promedio de espera
+        val tiempoEsperaRow = TableRow(this).apply {
+            layoutParams = TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT)
+        }
+        val tvTiempoEsperaPromedio = TextView(this).apply {
+            text = "Tiempo Promedio de Espera: ${String.format("%.2f", tiempoEsperaPromedio)}"
+            gravity = Gravity.START
+            setPadding(8, 8, 8, 8)
+            layoutParams = TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT)
+        }
+        tiempoEsperaRow.addView(tvTiempoEsperaPromedio)
+        resultadosTable.addView(tiempoEsperaRow)
+
+
     }
 
 }
