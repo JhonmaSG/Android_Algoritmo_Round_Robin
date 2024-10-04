@@ -58,7 +58,12 @@ class activity_funcionales_1 : AppCompatActivity() {
                 if (!proceso_duplicado) {
                     if(!tiempo_llegada_duplicado){
                         // Agregar la entrada de datos a la sublista actual
-                        lista_actual.add(Datos(numero_procesos.toInt(), tiempo_llegadas.toInt(), tiempo_rafagas.toInt()))
+                        lista_actual.add(Datos(
+                            id = numero_procesos.toInt(),
+                            tiempoLlegada = tiempo_llegadas.toInt(),
+                            tiempoRafaga = tiempo_rafagas.toInt(),
+                            tiempoRafagaOriginal = tiempo_rafagas.toInt()  // Pasamos el valor original de tiempo de ráfaga
+                        ))
 
                         // Limpiar los EditTexts para agregar más datos
                         numero_proceso.text.clear()

@@ -90,12 +90,15 @@ class activity_funcionales_2 : AppCompatActivity() {
 
                 // Si el tiempo de ráfaga es menor o igual al quantum, el proceso se completa
                 if (procesoActual.tiempoRafaga <= quantum) {
-                    tiempoGlobal += procesoActual.tiempoRafaga // Incrementar el tiempo total con el tiempo de ráfaga
+                    tiempoGlobal += procesoActual.tiempoRafaga
                     procesoActual.tiempoFinalizacion = tiempoGlobal
-                    lista_terminados.add(procesoActual) // Mover proceso a lista de terminados
 
-                    // Calcular el tiempo de espera
-                    val tiempoEspera = procesoActual.tiempoFinalizacion - procesoActual.tiempoLlegada - procesoActual.tiempoRafaga
+                    // Calcular el tiempo de espera usando el tiempo de ráfaga original
+                    val tiempoEspera = procesoActual.tiempoFinalizacion - procesoActual.tiempoLlegada - procesoActual.tiempoRafagaOriginal
+                    procesoActual.tiempoEspera = tiempoEspera
+
+                    lista_terminados.add(procesoActual)
+
                     sb.append("↓\nProceso ${procesoActual.id}: Terminado. Tiempo de Espera: $tiempoEspera\n")
                 } else {
                     // Si el proceso no termina en este quantum, restar el quantum a la ráfaga
@@ -233,7 +236,12 @@ class activity_funcionales_2 : AppCompatActivity() {
         return sumaTiempoEspera.toDouble() / listaTerminados.size
     }
 
-//------------------------------------------------------------------------------------------------------------------
+    private fun calcularTiempoEsperaPromedio(listaTerminados: List<Datos>): Double {
+        val sumaTiempoEspera = listaTerminados.sumOf { it.tiempoEspera }
+        return sumaTiempoEspera.toDouble() / listaTerminados.size
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
     private fun mostrarResultados(resultadosTable: TableLayout) {
 
         val tiempoFinalizacionPromedio = calcularTiempoFinalizacionPromedio(lista_terminados)
@@ -260,7 +268,7 @@ class activity_funcionales_2 : AppCompatActivity() {
             val tvEsperaFinal = TextView(this).apply {
                 text = proceso.tiempoEspera.toString()
                 gravity = Gravity.CENTER
-                layoutParams = TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f) // Usar weight para distribuir
+                layoutParams = TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f)
                 setBackgroundColor(Color.WHITE)
             }
 
