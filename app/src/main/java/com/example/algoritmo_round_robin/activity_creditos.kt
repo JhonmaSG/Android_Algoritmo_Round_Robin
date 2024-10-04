@@ -13,10 +13,5 @@ class activity_creditos : AppCompatActivity() {
         setContentView(R.layout.activity_creditos)
         /* Se debe mostrar el nombre de los estudiantes que realizaron el proyecto */
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
     }
 }

@@ -28,13 +28,14 @@ class activity_funcionales_2 : AppCompatActivity() {
 
         val btn_creditos = findViewById<Button>(R.id.boton_creditos)
 
+        //boton creditos
         btn_creditos.setOnClickListener {
             val intent = Intent(this, activity_creditos::class.java)
             startActivity(intent)
         }
 
         // Recuperar los datos pasados desde la primera actividad
-        lista_principal = intent.getSerializableExtra("listaPrincipal") as MutableList<Datos> // Aquí corregido
+        lista_principal = intent.getSerializableExtra("listaPrincipal") as MutableList<Datos>
         lista_terminados = mutableListOf()
         lista_pendientes = lista_principal.toMutableList()
 
@@ -43,13 +44,13 @@ class activity_funcionales_2 : AppCompatActivity() {
         this.quantum = quantum // Asignar el quantum al valor recibido
 
         lista_principal.forEachIndexed { index, list ->
-            Log.d("MasterList", "Lista acti 2 $index: $list")
+            //Log.d("MasterList", "Lista acti 2 $index: $list")
         }
 
         //Inicializar el TextView para mostrar los procesos
         val procesoText = findViewById<TextView>(R.id.proceso_text)
 
-        // Inicializar el TextView para mostrar los resultados
+        // Inicializar el TextView para mostrar los resultados tabla
         val resultadosTextView = findViewById<TableLayout>(R.id.resultadosTable)
 
 
@@ -61,7 +62,7 @@ class activity_funcionales_2 : AppCompatActivity() {
         // Mostrar los resultados en un TextView
         mostrarResultados(resultadosTextView)
 
-        Log.d("Acabo2", "Lista de procesos terminados:")
+        //Log.d("Acabo2", "Lista de procesos terminados:")
         // Mostrar la lista final de procesos terminados
         lista_terminados.forEach { proceso ->
             Log.d(
