@@ -1,5 +1,6 @@
 package com.example.algoritmo_round_robin
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
@@ -7,6 +8,7 @@ import android.os.Looper
 import android.util.Log
 import android.view.Gravity
 import android.view.View
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TableLayout
 import android.widget.TableRow
@@ -23,6 +25,13 @@ class activity_funcionales_2 : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_funcionales_2)
+
+        val btn_creditos = findViewById<Button>(R.id.boton_creditos)
+
+        btn_creditos.setOnClickListener {
+            val intent = Intent(this, activity_creditos::class.java)
+            startActivity(intent)
+        }
 
         // Recuperar los datos pasados desde la primera actividad
         lista_principal = intent.getSerializableExtra("listaPrincipal") as MutableList<Datos> // Aquí corregido
